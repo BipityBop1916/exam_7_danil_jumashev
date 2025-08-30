@@ -1,0 +1,32 @@
+﻿@model User
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "_Layout";
+}
+
+<h4>Profile / Registration</h4>
+<form asp-controller="Users" asp-action="Profile" method="post">
+    <div class="mb-3">
+        <label>Email</label>
+        <input name="Email" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Name</label>
+        <input name="FirstName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Last name</label>
+        <input name="LastName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Phone Number</label>
+        <input name="Phone" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Continue</button>
+</form>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="text-danger mt-2">@ViewBag.ErrorMessage</div>
+}

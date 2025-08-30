@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Library.Models.Book>
+
+@{
+    ViewBag.Title = "My Books";
+    Layout = "_Layout";
+}
+
+<h4>My Borrowed Books</h4>
+
+@if (!Model.Any())
+{
+    <p>You have no books on loan.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var book in Model)
+        {
+            <div class="col d-flex">
+                <div class="card flex-fill shadow-sm">
+                    <img src="@book.CoverImageUrl" class="card-img-top" style="height:250px; object-fit:cover;" />
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">@book.Author</p>
+                        <form asp-controller="Users" asp-action="ReturnBook" method="post" class="mt-auto">
+                            <input type="hidden" name="BookId" value="@book.Id" />
+                            <button type="submit" class="btn btn-warning btn-sm w-100">Return Book</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+

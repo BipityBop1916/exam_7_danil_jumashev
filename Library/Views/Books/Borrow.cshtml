@@ -1,0 +1,30 @@
+﻿@model Book
+
+@{
+    ViewBag.Title = "Borrow a book";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <img src="@Model.CoverImageUrl" class="img-fluid mb-3" alt="@Model.Title" />
+        <h4>@Model.Title</h4>
+        <p>Author: @Model.Author</p>
+        <p>Year: @Model.YearPublished</p>
+    </div>
+    <div class="col-md-6">
+        <h5>You are borrowing: @Model.Title</h5>
+        <form asp-action="BorrowBook" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label>Email</label>
+                <input name="Email" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-success">Borrow Book</button>
+        </form>
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="text-danger mt-2">@ViewBag.ErrorMessage</div>
+        }
+    </div>
+</div>

@@ -50,4 +50,56 @@ public class BooksController : Controller
         }
         return View(book);
     }
+    
+    public async Task<IActionResult> Borrow(int id)
+    {
+        var book = await _context.Books.FindAsync(id);
+        if (book == null)
+        {
+            return NotFound();
+        }
+
+        return View(book);
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> BorrowBook(int id, string email)
+    {
+        var book = await _context.Books.FindAsync(id);
+        if (book == null || book.Status == "Loaned out")
+        {
+            ViewBag.ErrorMessage = "Book unavailable";
+            return View("Borrow", book);
+        }
+
+        var user = await _context.Users.Include(u => u.BookLoans)
+            .FirstOrDefaultAsync(u => u.Email == email);
+
+        if (user == null)
+        {
+            ViewBag.ErrorMessage = "User not found";
+            return View("Borrow", book);
+        }
+
+        int activeLoans = user.BookLoans.Count(bl => bl.DateReturned == null);
+        if (activeLoans >= 3)
+        {
+            ViewBag.ErrorMessage = "User can't have more than 3 books";
+            return View("Borrow", book);
+        }
+
+        book.Status = "Loaned out";
+        var loan = new BookLoan
+        {
+            BookId = book.Id,
+            UserId = user.Id,
+            DateIssued = DateTime.Now
+        };
+
+        _context.BookLoans.Add(loan);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index", "Books");
+    }
 }

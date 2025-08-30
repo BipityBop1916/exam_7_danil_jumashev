@@ -24,4 +24,8 @@ public class Book
     public DateTime DateAdded { get; set; } = DateTime.Now;
 
     public string Status { get; set; } = "Available";
+    
+    //тут я хотел поставить required но с sqlite проблемы возникли "SQLite Error 19: 'FOREIGN KEY constraint failed'", починить не получилось
+    public int? CategoryId { get; set; }
+    public Category? Category { get; set; }
 }

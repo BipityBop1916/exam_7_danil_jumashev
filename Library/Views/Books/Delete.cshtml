@@ -1,0 +1,18 @@
+﻿@model Library.Models.Book
+
+@{
+    ViewBag.Title = "Delete Book";
+    Layout = "_Layout";
+}
+
+<h3>Delete Book</h3>
+
+<p>Are you sure you want to delete the book titled "@Model.Title"?</p>
+
+<div class="form-group">
+    <button form="deleteForm" type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</div>
+
+<form id="deleteForm" asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post"></form>
+

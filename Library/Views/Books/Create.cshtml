@@ -19,6 +19,13 @@
         <input asp-for="Author" class="form-control" />
         <span asp-validation-for="Author" class="text-danger"></span>
     </div>
+    
+    <div class="mb-3">
+        <label>Category</label>
+        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories" required>
+            <option value="">Select Category</option>
+        </select>
+    </div>
 
     <div class="mb-3">
         <label asp-for="CoverImageUrl" class="form-label">Cover URL</label>

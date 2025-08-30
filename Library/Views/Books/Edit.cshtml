@@ -1,0 +1,38 @@
+﻿@model Library.Models.Book
+
+@{
+    ViewBag.Title = "Edit Book";
+    Layout = "_Layout";
+}
+
+<h3>Edit Book</h3>
+
+<form asp-action="Edit" method="post">
+    <div class="mb-3">
+        <label>Title</label>
+        <input asp-for="Title" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Author</label>
+        <input asp-for="Author" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Cover Image URL</label>
+        <input asp-for="CoverImageUrl" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Year Published</label>
+        <input asp-for="YearPublished" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label>Category</label>
+        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories" required>
+            <option value="">Select Category</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Library.Models.Book>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <h2 class="mb-4">Book Catalog</h2>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        @foreach (var book in Model)
+        {
+            <div class="col d-flex">
+                <div class="card flex-fill shadow-sm">
+                    <img src="@book.CoverImageUrl" class="card-img-top" alt="@book.Title" style="height:250px; object-fit:cover;" />
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">Author: @book.Author</p>
+                        <p class="card-text">Status: @book.Status</p>
+                        <div class="mt-auto d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-primary btn-sm">Details</a>
+                            <a asp-action="Borrow" asp-route-id="@book.Id" class="btn btn-success btn-sm">Take</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        <nav>
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
